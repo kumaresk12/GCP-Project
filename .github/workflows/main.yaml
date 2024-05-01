@@ -1,33 +1,23 @@
-name: Terraform CI/CD
+name: GCP Workflow
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  terraform:
+  deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Terraform Init & Validate
-      run: |
-        terraform init
-        terraform validate
+      - name: Set up gcloud CLI
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.IG_PROJ_KAR }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          export_default_credentials: true
 
-    - name: Terraform Plan
-      run: terraform plan
-
-    - name: Terraform Apply
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve
-
-    # - name: Terraform Destroy
-    #   if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
-    #   run: terraform destroy -auto-approve
+      # Add more steps here to interact with GCP services
