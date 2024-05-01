@@ -18,8 +18,7 @@ jobs:
       - name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0.4.0'
         with:
-          workload_identity_provider: 'projects/490858522912/locations/global/workloadIdentityPools/terraform-pool/subject/SUBJECT_ATTRIBUTE_VALUE'
+          workload_identity_provider: 'projects/490858522912/locations/global/workloadIdentityPools/terraform-pool/attribute.repository/kumaresk12/GCP-Project'
           service_account: 'terraform-gcp@terraform-gcp-419906.iam.gserviceaccount.com'
       # Add more steps here to interact with GCP services
-
 
